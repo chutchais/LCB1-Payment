@@ -1,0 +1,50 @@
+# docker-compose.yml
+
+version: '3'
+
+services:
+  postgres:
+    restart: always
+    image: postgres:latest
+    container_name: postgres-payment
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    networks:
+      - main
+    volumes:
+      - pgdata:/var/lib/postgresql/payment/
+
+  payment-server:
+    container_name: payment-server
+    restart: always
+    build: ./src
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+      # - redis:redis
+    networks:
+      - main
+    volumes:
+      - web-django:/usr/src/payment
+      - web-static:/staticfiles
+    # env_file: .env
+    command: gunicorn payment.wsgi:application -w 2 -b :8000
+    ports:
+      - 8002:8000
+
+# gunicorn --workers=3 wmp.wsgi -b 0.0.0.0:8000
+
+
+
+volumes:  
+  web-django:
+  web-static:
+  pgdata:
+
+networks:
+  main:
