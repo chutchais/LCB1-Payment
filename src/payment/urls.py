@@ -29,7 +29,7 @@ from api.versioned.v2.router import api_urlpatterns as api_v2
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(api_v1)),
-    path('api/v2/', include(api_v2))
+    path('api/v2/', include(api_v2)),
     # path('api/', include(router.urls)),
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT},name='ssrfiles-detail'),
 ]
