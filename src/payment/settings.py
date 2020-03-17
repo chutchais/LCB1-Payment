@@ -160,6 +160,7 @@ STATIC_ROOT ='/staticfiles'
 
 MEDIA_URL = '/media/'
 
+AUTH_USER_MODEL = 'auth.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

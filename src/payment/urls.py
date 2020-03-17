@@ -21,9 +21,8 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 # from .routers import router
-
-from api.base.router import api_urlpatterns as api_v1
 # from api.base.router import *
+from api.base.router import api_urlpatterns as api_v1
 from api.versioned.v2.router import api_urlpatterns as api_v2
 
 urlpatterns = [
@@ -31,12 +30,12 @@ urlpatterns = [
     path('api/v1/', include(api_v1)),
     path('api/v2/', include(api_v2)),
     # path('api/', include(router.urls)),
-    # path('static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT},name='ssrfiles-detail'),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT},name='ssrfiles-detail'),
 ]
 
-# if settings.DEBUG:
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 from django.contrib import admin
 admin.site.site_header = 'LCB1 Payment API'
