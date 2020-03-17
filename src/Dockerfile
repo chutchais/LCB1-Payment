@@ -17,6 +17,11 @@ RUN pip install psycopg2
 ENV LIBRARY_PATH=/lib:/usr/lib
 
 WORKDIR /usr/src/payment
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 COPY ./requirements.txt /usr/src/payment
 
 RUN pip install --upgrade pip

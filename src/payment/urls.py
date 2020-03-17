@@ -38,5 +38,5 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 from django.contrib import admin
-admin.site.site_header = 'LCB1 Payment API'
-admin.site.site_title = 'LCB1 Payment API'
+admin.site.site_header = 'LCB1 Payment API.'
+admin.site.site_title = 'LCB1 Payment API.'

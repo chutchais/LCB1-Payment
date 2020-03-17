@@ -30,19 +30,15 @@ services:
     networks:
       - main
     volumes:
-      - web-django:/usr/src/payment
+      # - web-django:/usr/src/payment
       - web-static:/staticfiles
     # env_file: .env
     command: gunicorn payment.wsgi:application -w 2 -b :8000
     ports:
       - 8002:8000
 
-# gunicorn --workers=3 wmp.wsgi -b 0.0.0.0:8000
-
-
-
 volumes:  
-  web-django:
+  # web-django:
   web-static:
   pgdata:
 
