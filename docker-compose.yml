@@ -41,10 +41,10 @@ services:
 
 
 
-# volumes:  
-#   web-django:
-#   web-static:
-#   pgdata:
+volumes:  
+  web-django:
+  web-static:
+  pgdata:
 
 networks:
   main:
