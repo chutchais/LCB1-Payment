@@ -11,7 +11,7 @@ class NotifySerializer(base_serializers.NotifySerializer):
 	Ref1 			= serializers.CharField(source='ref1')
 	Ref2 			= serializers.CharField(source='ref2')
 	QRId 			= serializers.CharField(source='qrid')
-	Amoun 			= serializers.FloatField(source='amount')
+	Amount 			= serializers.FloatField(source='amount')
 	ResultCode 		= serializers.CharField(source='resultcode')
 	ResultDesc 		= serializers.CharField(source='resultdesc')
 	TransDate 		= serializers.DateTimeField(source='transdate',
@@ -21,7 +21,7 @@ class NotifySerializer(base_serializers.NotifySerializer):
 	Fee 			= serializers.CharField(source='fee',required=False,default=0)
 	
 	class Meta(base_serializers.NotifySerializer.Meta):
-		fields 	= ['BankRef','BillerNo','Ref1','Ref2','QRId','Amoun',
+		fields 	= ['BankRef','BillerNo','Ref1','Ref2','QRId','Amount',
 					'ResultCode','ResultDesc','TransDate','Fee']
 
 	def to_representation(self, instance):
