@@ -7,9 +7,9 @@ admin.site.register(Bank)
 
 
 class NotifyAdmin(admin.ModelAdmin):
-	search_fields           = ['bankref','ref1','ref2','billerno','payername']
+	search_fields           = ['bankref','ref1','ref2','billerno','payername','qrid']
 	list_filter             = ['bank','resultcode']
-	list_display            = ('bankref','transdate','billerno','payername','ref1','ref2','amount','resultcode','created')
+	list_display            = ('bankref','transdate','billerno','qrid','ref1','ref2','amount','resultcode','created')
 	readonly_fields         = ('transdate','created','modified','user')
 
 	# save_as = True
@@ -17,7 +17,7 @@ class NotifyAdmin(admin.ModelAdmin):
 	# save_on_top =True
 
 	fieldsets = [
-		('Basic Information',{'fields': ['bankref','billerno','ref1','ref2',]}),
+		('Basic Information',{'fields': ['bankref','qrid','billerno','ref1','ref2',]}),
 		('Payer Information',{'fields': ['payername','payerbank','amount','fee','transdate']}),
 		('transaction Information',{'fields': ['resultcode','resultdesc']}),
 		('System Information',{'fields':['user','created','modified']})
