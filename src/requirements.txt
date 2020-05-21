@@ -5,3 +5,4 @@ django-filter
 django-environ
 gunicorn==19.9.0
 urllib3
+urllib3[secure]
