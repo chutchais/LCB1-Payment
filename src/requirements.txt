@@ -4,3 +4,4 @@ markdown==3.2.1
 django-filter
 django-environ
 gunicorn==19.9.0
+urllib3

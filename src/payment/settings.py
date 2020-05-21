@@ -9,13 +9,13 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-# import environ
-# env = environ.Env(
-#     # set casting, default value
-#     DEBUG=(bool, False)
-# )
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 # # reading .env file
-# environ.Env.read_env()
+environ.Env.read_env()
 
 
 import os
@@ -28,8 +28,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ex%h%c3zhvc0087da6zeamxibra32q3+ok@y@8(1p(z!tw2gsc'
-# SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = 'ex%h%c3zhvc0087da6zeamxibra32q3+ok@y@8(1p(z!tw2gsc'
+SECRET_KEY = env('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -184,4 +184,6 @@ REST_FRAMEWORK = {
     # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
 }
 
-
+# Added by Chutchai on May 21,2020
+# To support Slip Verify function API.
+TMB_NOTIFY_URL = env('TMB_NOTIFY_URL')
