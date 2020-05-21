@@ -2,6 +2,8 @@ FROM python:3.7.5-alpine
 
 RUN apk update && apk add libpq
 
+
+
 RUN apk add --no-cache --virtual .build-deps \
     gcc \
     python3-dev \
@@ -9,6 +11,8 @@ RUN apk add --no-cache --virtual .build-deps \
     postgresql-dev \
     && pip install --no-cache-dir psycopg2 \
     && apk del --no-cache .build-deps
+
+RUN apk add build-base
 
 # Installing and build python module
 RUN pip install psycopg2
