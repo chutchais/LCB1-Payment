@@ -7,3 +7,4 @@ gunicorn==19.9.0
 certifi
 urllib3
 requests
+django-cors-headers
