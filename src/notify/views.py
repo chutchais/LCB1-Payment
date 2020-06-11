@@ -53,7 +53,7 @@ def VerifySlipLocal(request):
 	http = urllib3.PoolManager()
 	context ={}
 	# context = json.loads(request.body)
-	if request.method == 'POST':
+	if request.method == 'GET':
 		# body = json.loads(request.body)
 		# 1) body =json.dumps(request.body).encode('utf-8') --Notwork
 		body 		= json.loads(request.body)
