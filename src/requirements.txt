@@ -6,4 +6,4 @@ django-environ
 gunicorn==19.9.0
 certifi
 urllib3
-urllib3[secure]
+requests

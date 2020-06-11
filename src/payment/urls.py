@@ -25,13 +25,14 @@ from django.conf.urls.static import static
 from api.base.router import api_urlpatterns as api_v1
 from api.versioned.v2.router import api_urlpatterns as api_v2
 
-from notify.views import VerifySlip
+from notify.views import VerifySlip,VerifySlipLocal
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(api_v1)),
     path('api/v2/', include(api_v2)),
     path('api/verifyslip/', VerifySlip),
+    path('api/verifysliplocal/', VerifySlipLocal),
     # path('api/', include(router.urls)),
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT},name='ssrfiles-detail'),
 ]
