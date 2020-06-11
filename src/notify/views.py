@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.conf 			import settings
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -18,7 +19,8 @@ import json
 
 from .models import Notify
 
-@csrf_protect
+# @csrf_protect
+# @csrf_excempt
 def VerifySlip(request):
 	import urllib3
 	http = urllib3.PoolManager()
@@ -52,13 +54,16 @@ def VerifySlip(request):
 	return response#HttpResponse(context)#JsonResponse(context, safe=False)
 
 
-@csrf_protect
+# @csrf_excempt
+# @csrf_protect
+# @csrf_excempt
 def VerifySlipLocal(request):
-	import urllib3
-	http = urllib3.PoolManager()
-	context ={}
+	# import urllib3
+	# http = urllib3.PoolManager()
+	data ={}
+	# print(request.body)
 	# context = json.loads(request.body)
-	if request.method == 'GET':
+	if request.method == 'POST':
 		# body = json.loads(request.body)
 		# 1) body =json.dumps(request.body).encode('utf-8') --Notwork
 		body 		= json.loads(request.body)
@@ -68,6 +73,7 @@ def VerifySlipLocal(request):
 		ref1		= body['ref1']
 
 		notify = Notify.objects.filter(qrid=qrid,ref1=ref1)
+
 		if notify :
 			data ={
 					"BankRef": notify[0].bankref,
@@ -92,11 +98,12 @@ def VerifySlipLocal(request):
 		# 	body =body,
 		# 	headers={'Content-Type': 'application/json'})
 		# if r.status ==200 :
-		context = data
-		# print(context)
-		# Call TMB VerifySlip function
-		# HttpResponse(context)#
-		response = JsonResponse(data, safe=False)
-		response['Access-Control-Allow-Origin'] = '*'
-		response['Access-Control-Allow-Headers'] = '*'
+	context = data
+	# print(context)
+	# Call TMB VerifySlip function
+	# HttpResponse(context)#
+	response = JsonResponse(data, safe=False)
+	response['Access-Control-Allow-Origin'] = '*'
+	response['Access-Control-Allow-Headers'] = '*'
+
 	return response#JsonResponse(context, safe=False)
