@@ -41,10 +41,15 @@ def VerifySlip(request):
 			body =body,
 			headers={'Content-Type': 'application/json'})
 		# if r.status ==200 :
+		# print(r.data)
 		context = r.data.decode('utf-8')
 		# print(context)
+		# print(context)
 		# Call TMB VerifySlip function
-	return HttpResponse(context)#JsonResponse(context, safe=False)
+		response = JsonResponse(json.loads(context), safe=False)
+		response['Access-Control-Allow-Origin'] = '*'
+		response['Access-Control-Allow-Headers'] = '*'
+	return response#HttpResponse(context)#JsonResponse(context, safe=False)
 
 
 @csrf_protect
@@ -65,20 +70,20 @@ def VerifySlipLocal(request):
 		notify = Notify.objects.filter(qrid=qrid,ref1=ref1)
 		if notify :
 			data ={
-				    "BankRef": notify[0].bankref,
-				    "BillerNo": notify[0].billerno,
-				    "Ref1" : notify[0].ref1,
-				    "Ref2" : notify[0].ref2,
-				    "QRId" : notify[0].qrid,
-				    "Amount" : notify[0].amount,
-				    "ResultCode" : notify[0].resultcode,
-				    "ResultDesc" : notify[0].resultdesc,
-				    "TransDate" : notify[0].transdate
+					"BankRef": notify[0].bankref,
+					"BillerNo": notify[0].billerno,
+					"Ref1" : notify[0].ref1,
+					"Ref2" : notify[0].ref2,
+					"QRId" : notify[0].qrid,
+					"Amount" : notify[0].amount,
+					"ResultCode" : notify[0].resultcode,
+					"ResultDesc" : notify[0].resultdesc,
+					"TransDate" : notify[0].transdate
 				} 
 		else :
 			data ={
-				    "resultCode": "001",
-				    "resultDesc": "REC NOT FND"
+					"resultCode": "001",
+					"resultDesc": "REC NOT FND"
 				}
 		
 		# print(settings.TMB_NOTIFY_URL)
@@ -90,5 +95,8 @@ def VerifySlipLocal(request):
 		context = data
 		# print(context)
 		# Call TMB VerifySlip function
-		HttpResponse(context)#
-	return JsonResponse(context, safe=False)
+		# HttpResponse(context)#
+		response = JsonResponse(data, safe=False)
+		response['Access-Control-Allow-Origin'] = '*'
+		response['Access-Control-Allow-Headers'] = '*'
+	return response#JsonResponse(context, safe=False)
