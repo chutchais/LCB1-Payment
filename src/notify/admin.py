@@ -10,7 +10,7 @@ class NotifyAdmin(admin.ModelAdmin):
 	search_fields           = ['bankref','ref1','ref2','billerno','payername','qrid']
 	list_filter             = ['bank','resultcode']
 	list_display            = ('bankref','transdate','billerno','qrid','ref1','ref2','amount','resultcode','created')
-	readonly_fields         = ('transdate','created','modified','user')
+	readonly_fields         = ('created','modified','user')
 
 	# save_as = True
 	# save_as_continue = True
