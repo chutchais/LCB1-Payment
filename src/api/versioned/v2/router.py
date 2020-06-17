@@ -1,10 +1,17 @@
 from rest_framework import routers
-from . import views
-
+# from . import views
+from .views import NotifyViewSet,VerifySlip
 
 router = routers.DefaultRouter()
-router.register(r'notify', views.NotifyViewSet)
-router.register(r'verifyslip-local', views.VerifySlipLocal)
+# router = routers.SimpleRouter()
+router.register(r'notify', NotifyViewSet)
+# router.register(r'verifyslip', VerifySlip.as_view()) # Direct to TMB
+# router.register(r'verifyslip-local', views.VerifySlipLocal) #On local Host
+
 # router.register(r'books', views.BookViewSet)
 
-api_urlpatterns = router.urls
+# urlpatterns = [
+#     url(r'verifyslip', VerifySlip.as_view()),
+# ]
+
+api_urlpatterns =  router.urls
