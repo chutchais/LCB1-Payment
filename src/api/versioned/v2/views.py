@@ -6,26 +6,32 @@ from . import serializers as v2_serializers
 from django_filters.rest_framework import DjangoFilterBackend
 
 import json
+from rest_framework import viewsets
 from rest_framework import generics
 from django.conf	import settings
 from rest_framework.response import Response
 from django.http import JsonResponse
 from notify.models import Notify
+from .serializers import VerifySlipSerializer
 
 class NotifyViewSet(base_views.NotifyViewSet):
 	# pass
 	serializer_class = v2_serializers.NotifySerializer
+	filter_backends 	= [DjangoFilterBackend]
+	filterset_fields 	= ['qrid', 'ref1']
 
 
 # Verify on Local Database
-class VerifySlipLocal(base_views.NotifyViewSet):
-	serializer_class 	= v2_serializers.VerifySlipSerializer
+# class VerifySlipLocal(base_views.NotifyViewSet):
+class VerifySlipLocal(viewsets.ModelViewSet):
+	queryset 			= Notify.objects.all()
+	serializer_class 	= VerifySlipSerializer #v2_serializers.VerifySlipSerializer
 	filter_backends 	= [DjangoFilterBackend]
 	filterset_fields 	= ['qrid', 'ref1']
 
 
 # Verify direct to TMB 
-class VerifySlip(generics.RetrieveAPIView):
+class VerifySlip(generics.RetrieveAPIView,base_views.NotifyViewSet):
 	queryset = Notify.objects.all()
 	serializer_class = v2_serializers.VerifySlipSerializer
 
@@ -52,4 +58,5 @@ class VerifySlip(generics.RetrieveAPIView):
 			headers={'Content-Type': 'application/json'})
 
 		context = r.data.decode('utf-8')
+		print(context)
 		return JsonResponse(json.loads(context), safe=False)
