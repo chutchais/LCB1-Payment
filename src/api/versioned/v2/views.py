@@ -60,3 +60,15 @@ class VerifySlip(generics.RetrieveAPIView,base_views.NotifyViewSet):
 		context = r.data.decode('utf-8')
 		print(context)
 		return JsonResponse(json.loads(context), safe=False)
+
+# Added on July 22,2020
+# For IT Testing 
+class Testing(generics.RetrieveAPIView,base_views.NotifyViewSet):
+	queryset = Notify.objects.all()
+	serializer_class = v2_serializers.VerifySlipSerializer
+
+	def list(self, request):
+		context = {
+			"data":"Testing API"
+		}
+		return JsonResponse(context, safe=False)
