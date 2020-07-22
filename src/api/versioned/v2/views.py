@@ -69,6 +69,15 @@ class Testing(generics.RetrieveAPIView,base_views.NotifyViewSet):
 
 	def list(self, request):
 		context = {
-			"data":"Testing API"
+			"data":"Testing API on 10.24.50.80",
+			"ip" :get_client_ip(request)
 		}
 		return JsonResponse(context, safe=False)
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
