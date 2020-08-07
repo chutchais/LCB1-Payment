@@ -37,13 +37,16 @@ class VerifySlip(generics.RetrieveAPIView,base_views.NotifyViewSet):
 
 	def list(self, request):
 		# Default LCB1 = 010553811088480
-		billerId 	= self.request.query_params.get('billerid', '010553811088480') #011554701016180(LCM) or 010553811088480(LCB)
+		billerId 	= self.request.query_params.get('billerid', None) #011554701016180(LCM) or 010553811088480(LCB)
 		qrid 		= self.request.query_params.get('QRid', None)
 		# ref1 		= self.request.query_params.get('ref1', None)
+		print(billerId,qrid)
 
 		# billerId 	= '011554701016180'
 		biller 		= 'LCB' if billerId =='010553811088480' else 'LCM'
+		print(biller)
 		url 		= f'{settings.TMB_NOTIFY_URL}{biller}'
+		print(url)
 		body 		= {
 						     "BillerNo": biller,
 						     "QRId":qrid
