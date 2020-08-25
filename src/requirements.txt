@@ -8,3 +8,6 @@ certifi
 urllib3
 requests
 django-cors-headers
+# Added on Aug 17,2020 -- To apply Django Q
+django-q
+redis

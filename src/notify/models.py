@@ -55,3 +55,17 @@ class Notify(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('notify:detail', kwargs={'pk': self.pk})
+
+
+
+from django.db.models.signals import pre_save,post_save
+from django.dispatch import receiver
+from django_q.tasks import async_task
+
+# set up the pre_save signal for our user
+@receiver(post_save, sender=Notify)
+def send_notify(sender, instance,created, **kwargs):
+	# pass
+	if created :#Only new notify
+		# pass
+		async_task('notify.services.sendNotify', instance)

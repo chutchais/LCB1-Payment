@@ -3,6 +3,17 @@
 version: '3'
 
 services:
+  payment-redis:
+    container_name: payment-redis
+    image: redis:5.0.6-alpine
+    networks:
+      - main
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    
+
   postgres:
     restart: always
     image: postgres:latest
@@ -36,9 +47,26 @@ services:
     command: gunicorn payment.wsgi:application -w 2 -b :8000
     ports:
       - 8002:8000
-
+  
+  payment-qcluster:
+    build:
+      context: ./src
+    networks:
+      - main
+    # links:
+    #   - payment-redis:payment-redis
+    #   - postgres:postgres
+    volumes:
+      - web-static:/staticfiles
+    command: python manage.py qcluster
+    container_name: payment-qcluster
+    depends_on:
+      - payment-server
+    environment:
+      - REDIS_URL=redis://redis:6379/0
 volumes:  
   # web-django:
+  redis_data:
   web-static:
   pgdata:
 

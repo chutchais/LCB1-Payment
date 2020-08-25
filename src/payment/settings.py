@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_filters',
-    'notify'
+    'notify',
+    # Add on Aug 17,2020 -- To support Django Q
+    'django_q' 
 ]
 
 MIDDLEWARE = [
@@ -151,7 +153,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -191,3 +193,21 @@ REST_FRAMEWORK = {
 # Added by Chutchai on May 21,2020
 # To support Slip Verify function API.
 TMB_NOTIFY_URL = env('TMB_NOTIFY_URL')
+
+# Added by Chutchai on Aug 17,2020
+#To support send notify to another system
+Q_CLUSTER = {
+    'name': 'django_q_django',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': 'payment-redis',
+        'port': 6379,
+        'db': 1, }
+}

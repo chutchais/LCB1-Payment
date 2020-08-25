@@ -9,6 +9,7 @@ import json
 from rest_framework import viewsets
 from rest_framework import generics
 from django.conf	import settings
+from rest_framework import status
 from rest_framework.response import Response
 from django.http import JsonResponse
 from notify.models import Notify
@@ -19,7 +20,15 @@ class NotifyViewSet(base_views.NotifyViewSet):
 	serializer_class = v2_serializers.NotifySerializer
 	filter_backends 	= [DjangoFilterBackend]
 	filterset_fields 	= ['qrid', 'ref1']
-
+	def create(self, request):
+		print ('Create--Notify',request.data)
+		serializer = v2_serializers.NotifySerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			print('Create--Notify--Save',serializer.data)
+			return Response(serializer.data, status=status.HTTP_200_OK)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	# Created on Aug 25,2020 -- To change create status response from 201 to 200 (follow TMB Standard)
 
 # Verify on Local Database
 # class VerifySlipLocal(base_views.NotifyViewSet):
@@ -48,8 +57,8 @@ class VerifySlip(generics.RetrieveAPIView,base_views.NotifyViewSet):
 		url 		= f'{settings.TMB_NOTIFY_URL}{biller}'
 		print(url)
 		body 		= {
-						     "BillerNo": biller,
-						     "QRId":qrid
+							 "BillerNo": biller,
+							 "QRId":qrid
 						}
 		body 		= json.dumps(body).encode('utf-8')
 		import urllib3
@@ -78,9 +87,9 @@ class Testing(generics.RetrieveAPIView,base_views.NotifyViewSet):
 		return JsonResponse(context, safe=False)
 
 def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
+	x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+	if x_forwarded_for:
+		ip = x_forwarded_for.split(',')[0]
+	else:
+		ip = request.META.get('REMOTE_ADDR')
+	return ip
