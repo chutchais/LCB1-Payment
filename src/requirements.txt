@@ -11,3 +11,5 @@ django-cors-headers
 # Added on Aug 17,2020 -- To apply Django Q
 django-q
 redis
+# Added on Aug 26,2020 -- To post payment notice to ePayment
+requests
